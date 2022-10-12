@@ -2,6 +2,7 @@ package com.example.lugares
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -50,8 +51,13 @@ class principal : AppCompatActivity() {
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_principal)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    override fun onSupportNavigateUp(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.action_logoff ->{
+                firebase.auth.signOut()
+                finish()
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
     }
 }
